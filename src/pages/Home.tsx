@@ -2,10 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 import RecipesResponse from "../interfaces/Recipe";
-import { Grid } from "@mui/material";
+import { Box, Grid, Pagination, Typography } from "@mui/material";
 
 const Home = () => {
   const [recipes, setRecipes] = useState<RecipesResponse[]>([]);
+  const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
     const dataFetch = async () => {
@@ -15,14 +16,30 @@ const Home = () => {
     dataFetch();
   }, []);
 
+  const handleChange = (e: any, p: any) => {
+    console.log(e, p);
+    setPage(p);
+  };
+
   return (
-    <Grid container spacing={2}>
-      {recipes.map((recipe) => (
-        <Grid item>
-          <RecipeCard recipe={recipe} />
-        </Grid>
-      ))}
-    </Grid>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        my: 5,
+      }}
+    >
+      <Grid container spacing={2}>
+        {recipes.map((recipe) => (
+          <Grid item key={recipe.id} lg={4} md={6} sm={12}>
+            <RecipeCard recipe={recipe} key={recipe.id} />
+          </Grid>
+        ))}
+      </Grid>
+      <Typography>Page: {page}</Typography>
+      <Pagination count={10} shape="rounded" onChange={handleChange} />
+    </Box>
   );
 };
 

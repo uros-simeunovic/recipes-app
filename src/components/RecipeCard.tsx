@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import RecipesResponse from "../interfaces/Recipe";
+import { Link } from "react-router-dom";
 
 interface RecipeCardProps {
   recipe: RecipesResponse;
@@ -17,7 +18,7 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
   return (
     <Card
       sx={{
-        maxWidth: 345,
+        // maxWidth: 400,
         maxHeight: 500,
         borderRadius: 5,
         boxShadow: 5,
@@ -37,16 +38,17 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
           {recipe.name}
         </Typography>
         <Box component={"div"} sx={{ maxHeight: 100, overflow: "hidden" }}>
-          {recipe.instructions.map((info) => (
-            <Typography variant="body2" color="text.secondary">
+          {recipe.instructions.map((info, index) => (
+            <Typography variant="body2" color="text.secondary" key={index}>
               {info}
             </Typography>
           ))}
         </Box>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button>
+          <Link to={`/recipes-app/${recipe.id}`}>Vise</Link>
+        </Button>
       </CardActions>
     </Card>
   );
