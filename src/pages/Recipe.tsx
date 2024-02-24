@@ -23,7 +23,7 @@ const Recipe = () => {
       <Box
         component={"img"}
         src={recipe?.image}
-        width={1000}
+        width={{ md: 850, sm: 600, xs: 300 }}
         maxHeight={400}
         sx={{ borderRadius: 5, objectFit: "cover" }}
       />
