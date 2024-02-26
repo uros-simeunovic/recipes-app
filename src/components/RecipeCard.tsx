@@ -47,7 +47,7 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
       </CardContent>
       <CardActions>
         <Button>
-          <Link to={`/recipes-app/recipes/${recipe.id}`}>Vise</Link>
+          <Link to={`/recipes/${recipe.id}`}>Vise</Link>
         </Button>
       </CardActions>
     </Card>

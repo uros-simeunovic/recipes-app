@@ -10,7 +10,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/recipes-app/recipes/:id" element={<Recipe />} />
+          <Route path="/recipes/:id" element={<Recipe />} />
         </Routes>
       </HashRouter>
     </>
