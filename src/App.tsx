@@ -18,11 +18,11 @@ const router = createHashRouter([
     element: <Layout />,
     children: [
       {
-        path: "/recipes-app/",
+        path: "/",
         element: <Home />,
       },
       {
-        path: "/recipes-app/recipes/:id",
+        path: "/:id",
         element: <Recipe />,
       },
     ],
