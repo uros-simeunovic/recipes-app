@@ -14,7 +14,7 @@ const Layout = () => {
 
 const router = createHashRouter([
   {
-    path: "/recipes-app/",
+    path: "/",
     element: <Layout />,
     children: [
       {
