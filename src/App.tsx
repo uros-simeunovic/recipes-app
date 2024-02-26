@@ -1,38 +1,18 @@
-import { Outlet, RouterProvider, createHashRouter } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import Recipe from "./pages/Recipe";
 
-const Layout = () => {
-  return (
-    <>
-      <Header />
-      <Outlet />
-    </>
-  );
-};
-
-const router = createHashRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/:id",
-        element: <Recipe />,
-      },
-    ],
-  },
-]);
-
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <HashRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/:id" element={<Recipe />} />
+        </Routes>
+      </HashRouter>
     </>
   );
 }
