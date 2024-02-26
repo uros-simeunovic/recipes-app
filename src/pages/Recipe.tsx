@@ -17,7 +17,7 @@ const Recipe = () => {
     };
     dataFetch();
   }, []);
-  console.log(recipe?.rating);
+
   return (
     <Box display={"flex"} flexDirection={"column"} alignItems={"center"} mt={5}>
       <Box
