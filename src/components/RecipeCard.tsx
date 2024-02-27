@@ -18,8 +18,7 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
   return (
     <Card
       sx={{
-        // maxWidth: 400,
-        maxHeight: 500,
+        height: 500,
         borderRadius: 5,
         boxShadow: 5,
         display: "flex",
@@ -34,6 +33,13 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
         title={recipe.name}
       />
       <CardContent>
+        <Box component={"div"} display={"flex"} flexDirection={"row"} gap={2}>
+          {recipe.tags.map((tag) => (
+            <Typography variant="body2" color="text.secondary">
+              {tag}
+            </Typography>
+          ))}
+        </Box>
         <Typography gutterBottom variant="h5" component="div">
           {recipe.name}
         </Typography>

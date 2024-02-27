@@ -1,35 +1,51 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import RecipeCard from "../components/RecipeCard";
 import RecipesResponse from "../interfaces/Recipe";
-import { Box, Grid, Pagination, Typography } from "@mui/material";
-import { useLocation } from "react-router-dom";
-
-function useQuery() {
-  const { search } = useLocation();
-  return React.useMemo(() => new URLSearchParams(search), [search]);
-}
+import {
+  Box,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Pagination,
+  PaginationItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
+import { Link, useSearchParams } from "react-router-dom";
 
 const Home = () => {
   const [recipes, setRecipes] = useState<RecipesResponse[]>([]);
-  const [page, setPage] = useState<number>(1);
   const [total, setTotal] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(6);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const query = useQuery();
-  console.log(query.get("name"));
+  const currentPage: number = parseInt(
+    searchParams.get("page") ? searchParams.get("page")! : "1"
+  );
+  const skip: number = parseInt(
+    searchParams.get("skip") ? searchParams.get("skip")! : "0"
+  );
 
   useEffect(() => {
     const dataFetch = async () => {
-      const response = await axios.get("https://dummyjson.com/recipes");
+      const response = await axios.get(
+        `https://dummyjson.com/recipes/?page=${currentPage}&limit=${pageSize}&skip=${skip}`
+      );
       setRecipes(response.data.recipes);
       setTotal(response.data.total);
     };
     dataFetch();
-  }, []);
+  }, [currentPage, pageSize]);
 
-  const handleChange = (e: any, p: any) => {
-    console.log(e, p);
-    setPage(p);
+  const handleChange = (e: SelectChangeEvent<number>) => {
+    setPageSize(e.target.value as number);
+    setSearchParams({
+      page: "1",
+      limit: e.target.value as string,
+      skip: "0",
+    });
   };
 
   return (
@@ -48,8 +64,36 @@ const Home = () => {
           </Grid>
         ))}
       </Grid>
-      <Typography>Page: {page}</Typography>
-      <Pagination count={total / 10} shape="rounded" onChange={handleChange} />
+      <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
+        <Pagination
+          count={Math.ceil(total / pageSize)}
+          shape="rounded"
+          page={currentPage}
+          renderItem={(item) => (
+            <PaginationItem
+              component={Link}
+              to={`?page=${item.page}&limit=${pageSize}&skip=${
+                (item.page! - 1) * pageSize
+              } `}
+              {...item}
+            />
+          )}
+        />
+        <FormControl>
+          <InputLabel id="page-size">Items</InputLabel>
+          <Select
+            labelId="page-size"
+            id="page-size"
+            value={pageSize}
+            label="Age"
+            onChange={handleChange}
+          >
+            <MenuItem value={6}>6</MenuItem>
+            <MenuItem value={12}>12</MenuItem>
+            <MenuItem value={24}>24</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
     </Box>
   );
 };

@@ -10,8 +10,9 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { Link } from "react-router-dom";
 
-const pages = ["Home", "Products"];
+const pages = ["Home"];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -34,8 +35,8 @@ function Header() {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/recipes-app/"
+            component={Link}
+            to={"/"}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -111,7 +112,12 @@ function Header() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                <Link
+                  to={"/"}
+                  style={{ textDecoration: "none", color: "#fff" }}
+                >
+                  {page}
+                </Link>
               </Button>
             ))}
           </Box>
